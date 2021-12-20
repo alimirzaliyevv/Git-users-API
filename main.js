@@ -45,7 +45,6 @@ function intitialProcess(data = "none") {
 intitialProcess();
 display();
 loading();
-repositories();
 function loading(data = "none") {
   const loading = document.getElementById("loader");
   loading.style.display = data;
@@ -73,13 +72,18 @@ async function repositories() {
     .then((response) => response.json())
     .then((result) => {
       if (count <= 5) {
+          console.log('repos url',result)
         let htmlData = result.map((item) => {
           return `<div class="col-sm-6">
                             <div class="card" style="display: grid; margin-top:5px;">
                               <div class="card-body">
                                 <h5 class="card-title">${item.name} <span class="visibilityClass">${item.visibility}</span></h5>
                                 <p class="card-text">${item.description}</p>
-                                <a href="#" class="btn btn-primary">More</a>
+                                <div style="display: flex; justify-content: space-between;">
+                                <span>${item.language}</span>
+                                <span><i class="fas fa-code-branch"></i> ${item.forks_count}</span>
+                                <span><i class="fas fa-star"></i> ${item.stargazers_count}</span>                                
+                            </div>
                               </div>
                             </div>
                          </div>`;
@@ -98,10 +102,14 @@ async function organization() {
     .then((response) => response.json())
     .then((result) => {
       const image = document.getElementById("orgImage");
-
-      image.src = result[0].avatar_url;
       console.log("orgImage", result);
-      // document.getElementById("orgImage").src = result.avatar_url;
-      document.getElementById("overlay").innerText = result[0].description;
+      if(result.length){
+        image.src = result[0].avatar_url;
+        // document.getElementById("orgImage").src = result.avatar_url;
+        document.getElementById("overlay").innerText = result[0].description;
+      }else{
+          image.style.display= 'none'
+      }
+    
     });
 }
