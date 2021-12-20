@@ -29,6 +29,10 @@ async function fetchData() {
         document.getElementById("company").innerText = result.company;
         document.getElementById("login").innerText = result.login;
         document.getElementById("public_repos").innerText = result.public_repos;
+        document.getElementById("location").innerText = result.location;
+
+        document.getElementById("bio").innerText = result.bio;
+
         display("none");
       }, 2000);
     });
@@ -78,9 +82,9 @@ async function repositories() {
                             <div class="card" style="display: grid; margin-top:5px;">
                               <div class="card-body">
                                 <h5 class="card-title">${item.name} <span class="visibilityClass">${item.visibility}</span></h5>
-                                <p class="card-text">${item.description}</p>
+                                <p class="card-text">${item.description?item.description:''}</p>
                                 <div style="display: flex; justify-content: space-between;">
-                                <span>${item.language}</span>
+                                <span>${item.language?item.language:''}</span>
                                 <span><i class="fas fa-code-branch"></i> ${item.forks_count}</span>
                                 <span><i class="fas fa-star"></i> ${item.stargazers_count}</span>                                
                             </div>
