@@ -1,6 +1,7 @@
 var responseDTO;
 async function fetchData() {
-  document.getElementById("repositories").innerHTML = "";
+  resetDTO();
+  resetDTO();
 
   intitialProcess();
   loading("flex");
@@ -76,17 +77,29 @@ async function repositories() {
     .then((response) => response.json())
     .then((result) => {
       if (count <= 5) {
-          console.log('repos url',result)
+        console.log("repos url", result);
         let htmlData = result.map((item) => {
           return `<div class="col-sm-6">
                             <div class="card" style="display: grid; margin-top:5px;">
                               <div class="card-body">
-                                <h5 class="card-title">${item.name} <span class="visibilityClass">${item.visibility}</span></h5>
-                                <p class="card-text">${item.description?item.description:''}</p>
+                                <h5 class="card-title">${
+                                  item.name
+                                } <span class="visibilityClass">${
+            item.visibility
+          }</span></h5>
+                                <p style=" font-size: small;" class="card-text">${
+                                  item.description ? item.description : ""
+                                }</p>
                                 <div style="display: flex; justify-content: space-between;">
-                                <span>${item.language?item.language:''}</span>
-                                <span><i class="fas fa-code-branch"></i> ${item.forks_count}</span>
-                                <span><i class="fas fa-star"></i> ${item.stargazers_count}</span>                                
+                                <span>${
+                                  item.language ? item.language : ""
+                                }</span>
+                                <span><i class="fas fa-code-branch"></i> ${
+                                  item.forks_count
+                                }</span>
+                                <span><i class="fas fa-star"></i> ${
+                                  item.stargazers_count
+                                }</span>                                
                             </div>
                               </div>
                             </div>
@@ -107,13 +120,38 @@ async function organization() {
     .then((result) => {
       const image = document.getElementById("orgImage");
       console.log("orgImage", result);
-      if(result.length){
+      if (result.length) {
         image.src = result[0].avatar_url;
         // document.getElementById("orgImage").src = result.avatar_url;
         document.getElementById("overlay").innerText = result[0].description;
-      }else{
-          image.style.display= 'none'
+      } else {
+        image.style.display = "none";
       }
-    
     });
+}
+function resetDTO() {
+  document.getElementById("loader").value = "";
+  document.getElementById("information").value = "";
+  document.getElementById("repositories").value = "";
+  document.getElementById("image").value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("follower").value = "";
+  document.getElementById("following").value = "";
+  document.getElementById("company").value = "";
+  document.getElementById("login").value = "";
+  document.getElementById("public_repos").value = "";
+  document.getElementById("location").value = "";
+  document.getElementById("bio").value = "";
+  document.getElementById("overlay").innerText = "";
+}
+function printDiv(divName) {
+  var printContents = document.getElementById(divName).innerHTML;
+
+  var originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents;
+
+  window.print();
+
+  document.body.innerHTML = originalContents;
 }
